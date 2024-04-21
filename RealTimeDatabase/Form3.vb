@@ -22,10 +22,10 @@ Public Class Form3
     End Sub
 
     Public Async Sub UpdateBalance(userID As String, newBalance As Decimal)
+        'Testing git commit
         Try
             Dim firebaseResponse = client.Get($"regDB/user_info/{userID}")
             Dim userData = firebaseResponse.ResultAs(Of DataModel)()
-
             If userData IsNot Nothing Then
                 userData.Balance += newBalance
 
