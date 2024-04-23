@@ -90,7 +90,6 @@ Public Class Form2
 
     Private Async Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
         rowToDelete = DataGridView1.CurrentRow.Cells(0).Value
-        'TextBox1.Text = DataGridView1.CurrentRow.Cells(0).Value
     End Sub
 
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick

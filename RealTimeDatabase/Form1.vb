@@ -19,31 +19,10 @@ Public Class Form1
 
     Private client As IFirebaseClient
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        con = New MySqlConnection("server=mysql-2a9507cf-test-db-for-finals.d.aivencloud.com;user=avnadmin;password=AVNS_TiLTggg8w8cz3UAooYp;database=defaultdb;port=12730;")
         ConnectToFireBase()
         Form2.Timer1.Start()
     End Sub
     Private Sub UploadData()
-        'Try
-        '    con.Open()
-        '    Dim query As String = "INSERT INTO user_info (firstName, lastName, contNumb, address, gender) VALUES (@first_name, @last_name, @cont_num, @address, @gender)"
-        '    com = New MySqlCommand(query, con)
-        '    com.Parameters.AddWithValue("@first_name", fName_txt.Text)
-        '    com.Parameters.AddWithValue("@last_name", lName_txt.Text)
-        '    com.Parameters.AddWithValue("@cont_num", contNum_txt.Text)
-        '    com.Parameters.AddWithValue("@address", address_txt.Text)
-        '    com.Parameters.AddWithValue("@gender", gender_combo.Text)
-
-        '    com.ExecuteNonQuery()
-
-        'Catch ex As Exception
-        '    MessageBox.Show($"Error: {ex.Message}")
-        'Finally
-        '    If con.State = ConnectionState.Open Then
-        '        con.Close()
-        '    End If
-        '    con.Dispose()
-        'End Try
         Dim IDGen As String = $"{Now.Year}{Now.Month.ToString("00")}{Now.Day.ToString("00")}{Now.Hour.ToString("00")}{Now.Minute.ToString("00")}{Now.Second.ToString("00")}"
         Dim data As New DataModel() With {
             .ID = IDGen,
