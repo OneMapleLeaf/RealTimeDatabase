@@ -22,15 +22,14 @@ Public Class Form3
     End Sub
 
     Public Async Sub UpdateBalance(userID As String, newBalance As Decimal)
-        'Testing git commit
         Try
-            Dim firebaseResponse = client.Get($"regDB/user_info/{userID}")
+            'Dim firebaseResponse = client.Get($"regDB/user_info/{userID}")
+            Dim firebaseResponse = Await client.GetAsync($"regDB/user_info/{userID}")
             Dim userData = firebaseResponse.ResultAs(Of DataModel)()
             If userData IsNot Nothing Then
                 userData.Balance += newBalance
 
                 Dim updateResponse = Await client.UpdateAsync($"regDB/user_info/{userID}", userData)
-
 
                 If updateResponse.StatusCode = System.Net.HttpStatusCode.OK Then
                     MessageBox.Show($"Balance updated successfully for {userID}")

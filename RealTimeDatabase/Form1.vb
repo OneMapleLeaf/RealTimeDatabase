@@ -56,12 +56,13 @@ Public Class Form1
             }
 
         Dim json As String = JsonConvert.SerializeObject(data)
-        Dim response = client.Set($"regDB/user_info/{IDGen}", data)
-        If response.StatusCode = System.Net.HttpStatusCode.OK Then
+        Dim response = client.SetAsync(Of DataModel)($"regDB/user_info/{IDGen}", data)
+        If response.Result.StatusCode = System.Net.HttpStatusCode.OK Then
             MessageBox.Show("Data uploaded successfully")
         Else
             MessageBox.Show("Data upload failed")
         End If
+
         fName_txt.Clear()
         lName_txt.Clear()
         contNum_txt.Clear()

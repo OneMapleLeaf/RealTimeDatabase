@@ -8,8 +8,11 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Windows.Forms.VisualStyles
 
+
+
 Public Class Form2
     Private client As IFirebaseClient
+    Dim rowToDelete As String
     Public HH As Integer
     Public MM As Integer
     Public SS As Integer
@@ -33,7 +36,7 @@ Public Class Form2
 
     Public Async Sub fetchData()
         Try
-            Dim firebaseResponse = client.Get($"regDB/user_info/")
+            Dim firebaseResponse = Await client.GetAsync($"regDB/user_info/")
             Dim firebaseData = firebaseResponse.ResultAs(Of Dictionary(Of String, DataModel))()
             If firebaseData IsNot Nothing AndAlso firebaseData.Count > 0 Then
                 Dim dataList As New List(Of DataModel)
@@ -73,5 +76,28 @@ Public Class Form2
         Catch ex As Exception
             MessageBox.Show($"There is a problem with your internet")
         End Try
+    End Sub
+
+    Public Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim response As FirebaseResponse = Await client.DeleteAsync($"regDB/user_info/{rowToDelete}")
+        If response.StatusCode = System.Net.HttpStatusCode.OK Then
+            MessageBox.Show("Data deleted successfully")
+            fetchData()
+        Else
+            MessageBox.Show("Data delete failed")
+        End If
+    End Sub
+
+    Private Async Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        rowToDelete = DataGridView1.CurrentRow.Cells(0).Value
+        'TextBox1.Text = DataGridView1.CurrentRow.Cells(0).Value
+    End Sub
+
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        If e.RowIndex >= 0 AndAlso e.RowIndex < DataGridView1.Rows.Count Then
+            For Each cell As DataGridViewCell In DataGridView1.Rows(e.RowIndex).Cells
+                cell.Selected = True
+            Next
+        End If
     End Sub
 End Class
